@@ -19,6 +19,7 @@ var Categories = sequelize.define('categories', {
 var app = express()
 
 app.use(express.static('public'))
+app.use('/admin', express.static('admin'))
 
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded()); // to support URL-encoded bodies
