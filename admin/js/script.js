@@ -20,7 +20,7 @@ function readRecords() {
 function displayColumns(value) {
     return 	'<td>'+value.id+'</td>'
             + '<td class="name">'+value.name+'</td>'
-			+ '<td class="description">'+value.description.substring(0,255)+' ...</td>'
+			+ '<td class="description">'+value.description+' ...</td>'
 			+ '<td align="center">'
 			+	'<button onclick="viewRecord('+ value.id +')" class="btn btn-edit">Update</button>'
 			+ '</td>'
