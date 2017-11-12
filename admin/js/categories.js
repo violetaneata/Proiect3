@@ -20,7 +20,7 @@ function readRecords() {
 function displayColumns(value) {
     return 	'<td>'+value.id+'</td>'
             + '<td class="name">'+value.name+'</td>'
-			+ '<td class="description">'+value.description+' ...</td>'
+			+ '<td class="description">'+value.description+'</td>'
 			+ '<td align="center">'
 			+	'<button onclick="viewRecord('+ value.id +')" class="btn btn-edit">Update</button>'
 			+ '</td>'
@@ -35,7 +35,7 @@ function addRecord() {
     $('#description').val('');
     
     $('#myModalLabel').html('Add New Category');
-    $('#add_new_record_modal').modal('show');
+  //  $('#add_new_record_modal').modal('show');
 }
 
 function viewRecord(id) {
@@ -91,7 +91,7 @@ function updateRecord(formData) {
         data: formData,
         success: function(data) {
             $('#row_id_'+formData.id+'>td.name').html(formData.name);
-            $('#row_id_'+formData.id+'>td.description').html(formData.description.substring(0,255)+' ...');
+            $('#row_id_'+formData.id+'>td.description').html(formData.description);
             $('#add_new_record_modal').modal('hide');
         } 
     });
@@ -106,22 +106,3 @@ function deleteRecord(id) {
         }
     });
 }
-
-
-//extending jQuery with a serializeObject method so that form values can be retrieved as JSON objects
-$.fn.serializeObject = function()
-{
-    var o = {};
-    var a = this.serializeArray();
-    $.each(a, function() {
-        if (o[this.name] !== undefined) {
-            if (!o[this.name].push) {
-                o[this.name] = [o[this.name]];
-            }
-            o[this.name].push(this.value || '');
-        } else {
-            o[this.name] = this.value || '';
-        }
-    });
-    return o;
-};

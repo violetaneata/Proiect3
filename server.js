@@ -19,7 +19,7 @@ var Categories = sequelize.define('categories', {
 
 var Products = sequelize.define('products', {
     name: Sequelize.STRING,
-    categoryId: Sequelize.INTEGER,
+    category_id: Sequelize.INTEGER,
     description: Sequelize.STRING,
     price: Sequelize.INTEGER,
     image: Sequelize.STRING
@@ -88,11 +88,39 @@ app.delete('/categories/:id', function(request, response) {
 })
 
 app.get('/products', function(request, response) {
-    //todo implement products method
+    Products.findAll().then(
+            function(products) {
+                response.status(200).send(products)
+            }
+        )
+})
+
+app.get('/products/:id', function(request, response) {
+    Products.findAll().then(
+            function(products) {
+                response.status(200).send(products)
+            }
+        )
+})
+
+app.post('/products', function(request, response) {
+    //todo: implement POST /products method
+})
+
+app.put('/products/:id', function(request, response) {
+    //todo: implement PUT /products/:id method
+})
+
+app.delete('/products/:id', function(request, response) {
+    //todo: implement DELETE /products/:id method
 })
 
 app.get('/categories/:id/products', function(request, response) {
-    //todo products from a category
+    Products.findAll({where:{category_id: request.params.id}}).then(
+            function(products) {
+                response.status(200).send(products)
+            }
+        )
 })
 
 app.listen(8080)
