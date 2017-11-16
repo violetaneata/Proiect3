@@ -96,23 +96,43 @@ app.get('/products', function(request, response) {
 })
 
 app.get('/products/:id', function(request, response) {
-    Products.findAll().then(
-            function(products) {
-                response.status(200).send(products)
+    Products.findById(request.params.id).then(
+            function(product) {
+                response.status(200).send(product)
             }
         )
 })
 
 app.post('/products', function(request, response) {
-    //todo: implement POST /products method
+    Products.create(request.body).then(function(product) {
+        response.status(201).send(product)
+    })
 })
 
 app.put('/products/:id', function(request, response) {
-    //todo: implement PUT /products/:id method
+    Products.findById(request.params.id).then(function(product) {
+        if(product) {
+            product.update(request.body).then(function(product){
+                response.status(201).send(product)
+            }).catch(function(error) {
+                response.status(200).send(error)
+            })
+        } else {
+            response.status(404).send('Not found')
+        }
+    })
 })
 
 app.delete('/products/:id', function(request, response) {
-    //todo: implement DELETE /products/:id method
+    Products.findById(request.params.id).then(function(product) {
+        if(product) {
+            product.destroy().then(function(){
+                response.status(204).send()
+            })
+        } else {
+            response.status(404).send('Not found')
+        }
+    })
 })
 
 app.get('/categories/:id/products', function(request, response) {

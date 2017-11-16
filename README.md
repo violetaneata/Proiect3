@@ -18,7 +18,7 @@ source ~/workspace/bdsa-product-catalog/sql/catalog.sql
 
 INSERT INTO categories (name, description) VALUES ('Carti','Cele mai tari carti');
 
-INSERT INTO categories (name, description, category_id, price) VALUES ('Clean Code', 'Make code great again!', 1, 100);
+INSERT INTO products (name, description, category_id, price) VALUES ('Clean Code', 'Make code great again!', 1, 100);
 
 exit
 

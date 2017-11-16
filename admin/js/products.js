@@ -19,6 +19,7 @@ function readRecords() {
 
 function displayColumns(value) {
     return 	'<td>'+value.id+'</td>'
+            + '<td class="category_id">'+value.category_id+'</td>'
             + '<td class="name">'+value.name+'</td>'
 			+ '<td class="description">'+value.description+'</td>'
 			+ '<td align="center">'
@@ -31,6 +32,7 @@ function displayColumns(value) {
 
 function addRecord() {
     $('#id').val('');
+    $('#category_id').val('');
     $('#name').val('');
     $('#description').val('');
     
@@ -42,9 +44,9 @@ function viewRecord(id) {
     
     $.get(url, {}, function (data, status) {
         //bind the values to the form fields
+        $('#category_id').val(data.category_id);
         $('#name').val(data.name);
         $('#description').val(data.description);
-
         $('#id').val(id);
         $('#myModalLabel').html('Edit Product');
         
@@ -53,7 +55,10 @@ function viewRecord(id) {
 }
 
 function saveRecord() {
+    //get data from the html form
     var formData = $('#record_form').serializeObject();
+    
+    //decide if it's an edit or create
     if(formData.id) {
         updateRecord(formData);
     } else {
@@ -89,6 +94,7 @@ function updateRecord(formData) {
         },
         data: formData,
         success: function(data) {
+            $('#row_id_'+formData.id+'>td.category_id').html(formData.category_id);
             $('#row_id_'+formData.id+'>td.name').html(formData.name);
             $('#row_id_'+formData.id+'>td.description').html(formData.description);
             $('#add_new_record_modal').modal('hide');
@@ -98,7 +104,7 @@ function updateRecord(formData) {
 
 function deleteRecord(id) {
     $.ajax({
-        url: '/categories/'+id,
+        url: '/products/'+id,
         type: 'DELETE',
         success: function(data) {
             $('#row_id_'+id).remove();
