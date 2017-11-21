@@ -1,5 +1,6 @@
 var express = require("express")
 var Sequelize = require("sequelize")
+var nodeadmin = require("nodeadmin")
 
 //connect to mysql database
 var sequelize = new Sequelize('catalog', 'root', '', {
@@ -27,6 +28,9 @@ var Products = sequelize.define('products', {
 
 
 var app = express()
+
+//use nodadmin 
+app.use('nodeadmin', nodeadmin(app));
 
 //access static files
 app.use(express.static('public'))
