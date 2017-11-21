@@ -26,11 +26,12 @@ var Products = sequelize.define('products', {
     image: Sequelize.STRING
 })
 
+Products.belongsTo(Categories, {foreignKey: 'category_id', targetKey: 'id'})
+//Categories.hasMany(Products)
 
 var app = express()
 
-//use nodadmin 
-app.use('nodeadmin', nodeadmin(app));
+app.use('/nodeamin', nodeadmin(app))
 
 //access static files
 app.use(express.static('public'))
@@ -92,7 +93,15 @@ app.delete('/categories/:id', function(request, response) {
 })
 
 app.get('/products', function(request, response) {
-    Products.findAll().then(
+    Products.findAll(
+        {
+            include: [{
+                model: Categories,
+                where: { id: Sequelize.col('products.category_id') }
+            }]
+        }
+        
+        ).then(
             function(products) {
                 response.status(200).send(products)
             }

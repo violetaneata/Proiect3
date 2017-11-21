@@ -30,6 +30,7 @@ function showProducts(categoryId) {
                   +  '<h2>'+product.name+'</h2>'
                   +  '<p>'+product.description+'</p>'
                   +  '<p>Pret: '+product.pret+'</p>'
+                  +  '<p>Categorie: '+product.category.name+'</p>'
                 + '</div>';
             }
         )

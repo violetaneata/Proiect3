@@ -19,7 +19,7 @@ function readRecords() {
 
 function displayColumns(value) {
     return 	'<td>'+value.id+'</td>'
-            + '<td class="category_id">'+value.category_id+'</td>'
+            + '<td class="category_id">'+value.category.name+'</td>'
             + '<td class="name">'+value.name+'</td>'
 			+ '<td class="description">'+value.description+'</td>'
 			+ '<td align="center">'
