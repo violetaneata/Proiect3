@@ -32,6 +32,19 @@ function showProducts(categoryId) {
                   +  '<p>Pret: '+product.pret+'</p>'
                   +  '<p>Categorie: '+product.category.name+'</p>'
                 + '</div>';
+                
+                html = html + '<h3>Product reviews</h3>'
+                
+                if(product.reviews) {
+                    product.reviews.forEach(
+                        function(reviewData) {
+                            html = html + reviewData.name + ' ' + reviewData.content;
+                            html = html + '<br>';
+                        }
+                    )
+                }
+                
+                
             }
         )
         $('#content').html(html);

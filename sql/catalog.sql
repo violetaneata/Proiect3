@@ -28,6 +28,18 @@ CREATE TABLE IF NOT EXISTS `categories` (
   KEY `id` (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+CREATE TABLE IF NOT EXISTS `reviews` (
+  `id` smallint(5) NOT NULL AUTO_INCREMENT,
+  `product_id` smallint(5) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  `score` smallint(5) DEFAULT NULL,
+  `createdAt` timestamp,
+  `updatedAt` timestamp,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+
 -- --------------------------------------------------------
 
 --

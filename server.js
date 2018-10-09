@@ -26,7 +26,16 @@ var Products = sequelize.define('products', {
     image: Sequelize.STRING
 })
 
+var Reviews = sequelize.define('reviews', {
+    product_id: Sequelize.INTEGER,
+    name: Sequelize.STRING,
+    content: Sequelize.STRING,
+    score: Sequelize.INTEGER
+})
+
 Products.belongsTo(Categories, {foreignKey: 'category_id', targetKey: 'id'})
+//Reviews.belongsTo(Products, {foreignKey: 'product_id', targetKey: 'id'})
+Products.hasMany(Reviews, {foreignKey: 'product_id'});
 //Categories.hasMany(Products)
 
 var app = express()
@@ -45,7 +54,6 @@ app.get('/categories', function(request, response) {
     Categories.findAll().then(function(categories){
         response.status(200).send(categories)
     })
-        
 })
 
 // get one category by id
@@ -98,6 +106,10 @@ app.get('/products', function(request, response) {
             include: [{
                 model: Categories,
                 where: { id: Sequelize.col('products.category_id') }
+            }, {
+                model: Reviews,
+                where: { id: Sequelize.col('products.id')},
+                required: false
             }]
         }
         
@@ -109,7 +121,16 @@ app.get('/products', function(request, response) {
 })
 
 app.get('/products/:id', function(request, response) {
-    Products.findById(request.params.id).then(
+    Products.findById(request.params.id, {
+            include: [{
+                model: Categories,
+                where: { id: Sequelize.col('products.category_id') }
+            }, {
+                model: Reviews,
+                where: { id: Sequelize.col('products.id')},
+                required: false
+            }]
+        }).then(
             function(product) {
                 response.status(200).send(product)
             }
@@ -149,11 +170,47 @@ app.delete('/products/:id', function(request, response) {
 })
 
 app.get('/categories/:id/products', function(request, response) {
-    Products.findAll({where:{category_id: request.params.id}}).then(
+    Products.findAll({
+            where:{category_id: request.params.id},
+            
+            include: [{
+                model: Categories,
+                where: { id: Sequelize.col('products.category_id') }
+            }, {
+                model: Reviews,
+                where: { id: Sequelize.col('products.id')},
+                required: false
+            }]
+        }
+            ).then(
             function(products) {
                 response.status(200).send(products)
             }
         )
+})
+
+app.get('/reviews', function(request, response) {
+    Reviews.findAll().then(function(reviews){
+        response.status(200).send(reviews)
+    })
+})
+
+app.get('/reviews/:id', function(request, response) {
+    
+})
+
+app.post('/reviews', function(request, response) {
+    Reviews.create(request.body).then(function(review) {
+        response.status(201).send(review)
+    })
+})
+
+app.put('/reviews/:id', function(request, response) {
+    
+})
+
+app.delete('/reviews/:id', function(request, response) {
+    
 })
 
 app.listen(8080)
