@@ -34,9 +34,7 @@ var Reviews = sequelize.define('reviews', {
 })
 
 Products.belongsTo(Categories, {foreignKey: 'category_id', targetKey: 'id'})
-//Reviews.belongsTo(Products, {foreignKey: 'product_id', targetKey: 'id'})
 Products.hasMany(Reviews, {foreignKey: 'product_id'});
-//Categories.hasMany(Products)
 
 var app = express()
 
