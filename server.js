@@ -47,12 +47,17 @@ app.use('/admin', express.static('admin'))
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded()); // to support URL-encoded bodies
 
+async function getCategories(request, response) {
+    try {
+        let categories = await Categories.findAll();
+        response.status(200).json(categories)
+    } catch(err) {
+        response.status(500).send('something bad happened')
+    }
+}
+
 // get a list of categories
-app.get('/categories', function(request, response) {
-    Categories.findAll().then(function(categories){
-        response.status(200).send(categories)
-    })
-})
+app.get('/categories', getCategories)
 
 // get one category by id
 app.get('/categories/:id', function(request, response) {
