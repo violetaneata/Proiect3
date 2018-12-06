@@ -47,6 +47,18 @@ app.use('/admin', express.static('admin'))
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded()); // to support URL-encoded bodies
 
+app.get('/createdb', (request, response) => {
+    sequelize.sync({force: true}).then(() => {
+        response.status(200).send('tables created')
+    }).catch((err) => {
+        response.status(500).send('could not create tables')
+    })
+})
+
+app.get('/createdata', (req, res) => {
+    //TODO add some test data here
+})
+
 async function getCategories(request, response) {
     try {
         let categories = await Categories.findAll();
