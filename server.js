@@ -1,16 +1,17 @@
 var express = require("express")
 var Sequelize = require("sequelize")
-var nodeadmin = require("nodeadmin")
 
 //connect to mysql database
-var sequelize = new Sequelize('catalog', 'root', '', {
+var sequelize = new Sequelize('catalog', 'username', 'password', {
     dialect:'mysql',
     host:'localhost'
 })
 
 sequelize.authenticate().then(function(){
     console.log('Success')
-})
+}).catch( function(err) {
+    console.log(err)
+} )
 
 //define a new Model
 var Categories = sequelize.define('categories', {
@@ -37,8 +38,6 @@ Products.belongsTo(Categories, {foreignKey: 'category_id', targetKey: 'id'})
 Products.hasMany(Reviews, {foreignKey: 'product_id'});
 
 var app = express()
-
-app.use('/nodeamin', nodeadmin(app))
 
 //access static files
 app.use(express.static('public'))
