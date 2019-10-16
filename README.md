@@ -16,17 +16,15 @@ npm install
 
 # install mysql
 
-```bash
-mysql-ctl start
-```
+Pentru a configura serviciul mysql -> https://ebu.gitbook.io/webtech-superheroes/mysql
 
-```bash
-mysql -u root
-```
+# import baza de date
 
 ```sql
 source ~/workspace/bdsa-product-catalog/sql/catalog.sql
 ```
+
+# import date
 
 ```sql
 INSERT INTO categories (name, description) VALUES ('Carti','Cele mai tari carti');
@@ -45,6 +43,4 @@ exit
 ```bash
 node server.js
 ```
-
-(or in Cloud9 open file and press Run)
 

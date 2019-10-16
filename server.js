@@ -2,6 +2,7 @@ var express = require("express")
 var Sequelize = require("sequelize")
 
 //connect to mysql database
+//baza de date, username, password
 var sequelize = new Sequelize('catalog', 'username', 'password', {
     dialect:'mysql',
     host:'localhost'
@@ -11,7 +12,7 @@ sequelize.authenticate().then(function(){
     console.log('Success')
 }).catch( function(err) {
     console.log(err)
-} )
+})
 
 //define a new Model
 var Categories = sequelize.define('categories', {
@@ -66,6 +67,10 @@ async function getCategories(request, response) {
         response.status(500).send('something bad happened')
     }
 }
+
+//app.[metoda_http]('/endpoint', function(request, response) {
+    response.status(200).send("asdasdas")
+})
 
 // get a list of categories
 app.get('/categories', getCategories)
