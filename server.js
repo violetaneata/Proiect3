@@ -68,10 +68,6 @@ async function getCategories(request, response) {
     }
 }
 
-//app.[metoda_http]('/endpoint', function(request, response) {
-    response.status(200).send("asdasdas")
-})
-
 // get a list of categories
 app.get('/categories', getCategories)
 
