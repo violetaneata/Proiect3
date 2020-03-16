@@ -19,7 +19,7 @@ function readRecords() {
 
 function displayColumns(value) {
     return 	'<td>'+value.id+'</td>'
-            + '<td class="category_id">'+value.category.name+'</td>'
+            + '<td class="category_id">'+ (value.category ? value.category.name : value.category_id) +'</td>'
             + '<td class="name">'+value.name+'</td>'
 			+ '<td class="description">'+value.description+'</td>'
 			+ '<td align="center">'
@@ -47,6 +47,7 @@ function viewRecord(id) {
         $('#category_id').val(data.category_id);
         $('#name').val(data.name);
         $('#description').val(data.description);
+        $('#price').val(data.price);
         $('#id').val(id);
         $('#myModalLabel').html('Edit Product');
         

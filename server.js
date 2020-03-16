@@ -3,9 +3,9 @@ var Sequelize = require("sequelize")
 
 //connect to mysql database
 //baza de date, username, password
-var sequelize = new Sequelize('catalog', 'username', 'password', {
+var sequelize = new Sequelize('catalog', 'root', 'pass', {
     dialect:'mysql',
-    host:'localhost'
+    host:'db'
 })
 
 sequelize.authenticate().then(function(){
@@ -90,7 +90,7 @@ app.post('/categories', function(request, response) {
 })
 
 app.put('/categories/:id', function(request, response) {
-    Categories.findById(request.params.id).then(function(category) {
+    Categories.findByPk(request.params.id).then(function(category) {
         if(category) {
             category.update(request.body).then(function(category){
                 response.status(201).send(category)
@@ -104,7 +104,7 @@ app.put('/categories/:id', function(request, response) {
 })
 
 app.delete('/categories/:id', function(request, response) {
-    Categories.findById(request.params.id).then(function(category) {
+    Categories.findByPk(request.params.id).then(function(category) {
         if(category) {
             category.destroy().then(function(){
                 response.status(204).send()
@@ -136,7 +136,7 @@ app.get('/products', function(request, response) {
 })
 
 app.get('/products/:id', function(request, response) {
-    Products.findById(request.params.id, {
+    Products.findByPk(request.params.id, {
             include: [{
                 model: Categories,
                 where: { id: Sequelize.col('products.category_id') }
@@ -159,7 +159,7 @@ app.post('/products', function(request, response) {
 })
 
 app.put('/products/:id', function(request, response) {
-    Products.findById(request.params.id).then(function(product) {
+    Products.findByPk(request.params.id).then(function(product) {
         if(product) {
             product.update(request.body).then(function(product){
                 response.status(201).send(product)
@@ -173,7 +173,7 @@ app.put('/products/:id', function(request, response) {
 })
 
 app.delete('/products/:id', function(request, response) {
-    Products.findById(request.params.id).then(function(product) {
+    Products.findByPk(request.params.id).then(function(product) {
         if(product) {
             product.destroy().then(function(){
                 response.status(204).send()
