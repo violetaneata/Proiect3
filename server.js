@@ -205,9 +205,7 @@ app.get('/categories/:id/products', function(request, response) {
 })
 
 app.get('/reviews', function(request, response) {
-    Reviews.findAll().then(function(reviews){
-        response.status(200).send(reviews)
-    })
+
 })
 
 app.get('/reviews/:id', function(request, response) {
@@ -215,9 +213,7 @@ app.get('/reviews/:id', function(request, response) {
 })
 
 app.post('/reviews', function(request, response) {
-    Reviews.create(request.body).then(function(review) {
-        response.status(201).send(review)
-    })
+
 })
 
 app.put('/reviews/:id', function(request, response) {
