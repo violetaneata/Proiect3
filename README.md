@@ -16,7 +16,7 @@ npm install
 
 # install mysql
 
-Pentru a configura serviciul mysql -> https://ebu.gitbook.io/webtech-superheroes/mysql
+Pentru a configura serviciul mysql -> https://tutoriale.webtech-superheroes.net/configurare-mediu-de-lucru/mysql
 
 # import baza de date
 
