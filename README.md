@@ -21,7 +21,7 @@ Pentru a configura serviciul mysql -> https://tutoriale.webtech-superheroes.net/
 # import baza de date
 
 ```sql
-source ~/workspace/bdsa-product-catalog/sql/catalog.sql
+source ~/environment/bdsa-product-catalog/sql/catalog.sql
 ```
 
 # import date
