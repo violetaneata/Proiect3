@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Catalog Admin - Products</title>
+    <title>Catalog Admin - Reviews</title>
     
     <!-- Jquery JS file -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -16,7 +16,7 @@
     
     <!-- Custom JS file -->
     <script type="text/javascript" src="js/serialize.js"></script>
-    <script type="text/javascript" src="js/products.js"></script>
+    <script type="text/javascript" src="js/reviews.js"></script>
 </head>
 <body>
 
@@ -30,15 +30,15 @@
     <ul class="nav nav-tabs">
       <li role="presentation"><a href="/admin/"style="font-family:fantasy; font-size:200%">Home</a></li>
       <li role="presentation"><a href="categories.html" style="font-family:fantasy; font-size:200%">Categorii</a></li>
-      <li role="presentation" class="active"><a href="products.html" style="font-family:fantasy; font-size:200%">Produse</a></li>
-      <li role="presentation"><a href="reviews.html" style="font-family:fantasy; font-size:200%">Recenzii</a></li>
+      <li role="presentation"><a href="products.html" style="font-family:fantasy; font-size:200%">Produse</a></li>
+      <li role="presentation" class="active"><a href="reviews.html" style="font-family:fantasy; font-size:200%">Recenzii</a></li>
     </ul>
     <br/>
     <div class="row">
         <div class="col-md-12">
             <div class="pull-left">
                 <button class="btn btn-success" data-toggle="modal" data-target="#add_new_record_modal" onclick="addRecord()"
-                style="position:relative;  top:20px; font-family:fantasy;">Adauga un produs</button>
+                style="position:relative;  top:20px; font-family:fantasy;">Adauga un review</button>
             </div>
         </div>
     </div>
@@ -47,11 +47,11 @@
             <div class="records_content">
                 <br/>
                 <!--<h3>Produse</h3>-->
-                <table id="articles" class="table table-bordered table-striped" style="font-family:Comic Sans MS;">
+                <table id="articles" class="table table-bordered table-striped">
 						<tr>
 							<th style="font-family:fantasy; font-size:150%">ID</th>
-							<th style="font-family:fantasy; font-size:150%">Categorie</th>
 							<th style="font-family:fantasy; font-size:150%">Produs</th>
+							<th style="font-family:fantasy; font-size:150%">Nota</th>
 							<th style="font-family:fantasy; font-size:150%">Descriere</th>
 							<th style="font-family:fantasy; font-size:150%">Modifica</th>
 							<th style="font-family:fantasy; font-size:150%">Sterge</th>
@@ -72,26 +72,22 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel" style="font-family:fantasy;">Add New Product</h4>
+                <h4 class="modal-title" id="myModalLabel" style="font-family:fantasy;">Add New Review</h4>
             </div>
             <div class="modal-body">
                 <form id="record_form">
                     <input type="hidden" name="id" id="id" />
                     <div class="form-group">
-                        <label for="name" style="font-family:fantasy;">ID Categorie</label>
-                        <input type="text" name="category_id" id="category_id" placeholder="ID Categorie" class="form-control" style="font-family:fantasy;"/>
+                        <label for="name" style="font-family:fantasy;">ID Produs</label>
+                        <input type="text" name="product_id" id="product_id" placeholder="ID Produs" class="form-control" style="font-family:fantasy;"/>
                     </div>
                     <div class="form-group">
-                        <label for="name" style="font-family:fantasy;">Produs</label>
-                        <input type="text" name="name" id="name" placeholder="Produs" class="form-control" style="font-family:fantasy;"/>
+                        <label for="name" style="font-family:fantasy;">Nota</label>
+                        <input type="text" name="score" id="score" placeholder="Nota" class="form-control" style="font-family:fantasy;"/>
                     </div>
                     <div class="form-group">
                         <label for="abstract" style="font-family:fantasy;">Descriere</label>
-                        <textarea name="description" id="description" placeholder="Descriere" rows="5" class="form-control" style="font-family:fantasy;"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="name" style="font-family:fantasy;">Pret</label>
-                        <input type="text" name="price" id="price" placeholder="Pret" class="form-control" style="font-family:fantasy;"/>
+                        <textarea name="content" id="content" placeholder="Descriere" rows="5" class="form-control" style="font-family:fantasy;"></textarea>
                     </div>
                 </form>
             </div>

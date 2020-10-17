@@ -7,7 +7,7 @@ $(document).ready(function () {
 
 // READ records
 function readRecords() {
-    $.get("/products/", {}, function (data, status) {
+    $.get("/reviews/", {}, function (data, status) {
         data.forEach(function(value) {
             var row = '<tr id="row_id_'+ value.id +'">'
             			+ displayColumns(value)
@@ -19,9 +19,10 @@ function readRecords() {
 
 function displayColumns(value) {
     return 	'<td>'+value.id+'</td>'
-            + '<td class="category_id">'+ (value.category ? value.category.name : value.category_id) +'</td>'
-            + '<td class="name">'+value.name+'</td>'
-			+ '<td class="description">'+value.description+'</td>'
+            + '<td class="product_id">'+ (value.product ? value.product.name : value.product_id) +'</td>'
+            + '<td class="score">'+value.score+'</td>'
+			+ '<td class="content">'+value.content+'</td>'
+			  
 			+ '<td align="center">'
 			+	'<button onclick="viewRecord('+ value.id +')" class="btn btn-edit">Update</button>'
 			+ '</td>'
@@ -32,24 +33,24 @@ function displayColumns(value) {
 
 function addRecord() {
     $('#id').val('');
-    $('#category_id').val('');
-    $('#name').val('');
-    $('#description').val('');
+    $('#product_id').val('');
+    $('#score').val('');
+    $('#content').val('');
     
-    $('#myModalLabel').html('Add New Product');
+    $('#myModalLabel').html('Add New review');
 }
 
 function viewRecord(id) {
-    var url = "/products/" + id;
+    var url = "/reviews/" + id;
     
     $.get(url, {}, function (data, status) {
         //bind the values to the form fields
-        $('#category_id').val(data.category_id);
-        $('#name').val(data.name);
-        $('#description').val(data.description);
-        $('#price').val(data.price);
+        $('#product_id').val(data.product_id);
+        $('#score').val(data.score);
+        $('#content').val(data.content);
+        
         $('#id').val(id);
-        $('#myModalLabel').html('Edit Product');
+        $('#myModalLabel').html('Edit review');
         
         $('#add_new_record_modal').modal('show');
     });
@@ -59,24 +60,17 @@ function saveRecord() {
     //get data from the html form
     var formData = $('#record_form').serializeObject();
     
-    console.log(formData)
-    if(formData.name =='' || formData.description=='' || formData.category_id=='' || formData.price=='')
-    {
-        window.alert("Completati toate campurile!");
-    }
-    else 
-    {
+    //decide if it's an edit or create
     if(formData.id) {
         updateRecord(formData);
     } else {
         createRecord(formData);
     }
-    }
 }
 
 function createRecord(formData) {
     $.ajax({
-        url: '/products/',
+        url: '/reviews/',
         type: 'POST',
         accepts: {
             json: 'application/json'
@@ -95,16 +89,16 @@ function createRecord(formData) {
 
 function updateRecord(formData) {
     $.ajax({
-        url: '/products/'+formData.id,
+        url: '/reviews/'+formData.id,
         type: 'PUT',
         accepts: {
             json: 'application/json'
         },
         data: formData,
         success: function(data) {
-            $('#row_id_'+formData.id+'>td.category_id').html(formData.category_id);
-            $('#row_id_'+formData.id+'>td.name').html(formData.name);
-            $('#row_id_'+formData.id+'>td.description').html(formData.description);
+            $('#row_id_'+formData.id+'>td.product_id').html(formData.product_id);
+            $('#row_id_'+formData.id+'>td.score').html(formData.score);
+            $('#row_id_'+formData.id+'>td.content').html(formData.content);
             $('#add_new_record_modal').modal('hide');
         } 
     });
@@ -112,7 +106,7 @@ function updateRecord(formData) {
 
 function deleteRecord(id) {
     $.ajax({
-        url: '/products/'+id,
+        url: '/reviews/'+id,
         type: 'DELETE',
         success: function(data) {
             $('#row_id_'+id).remove();

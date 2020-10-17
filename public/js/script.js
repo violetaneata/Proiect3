@@ -1,6 +1,7 @@
 $(document).ready(function(){
     showCategories()
     showProducts()
+    showReviews()
 })
 
 function showCategories() {
@@ -42,6 +43,31 @@ function showProducts(categoryId) {
                     )
                 }
                 
+                
+            }
+        )
+        $('#content').html(html);
+    })
+}
+
+    function showReviews(productId) {
+    if(productId) {
+        var url = '/products/'+ productId +'/reviews';
+    } else {
+        var url = '/reviews'   
+    }
+    $.get(url, function(data) {
+        var html = '';
+        data.forEach(
+            function(review) {
+                html = html + '<div class="review">'
+                  +  '<h2>'+review.name+'</h2>'
+                  +  '<p>'+review.content+'</p>'
+                  +  '<p>Nota: '+review.score+'</p>'
+                  +  '<p>Produs: '+review.product.name+'</p>'
+                + '</div>';
+                
+                html = html + '<h3>Product reviews</h3>'
                 
             }
         )

@@ -55,10 +55,19 @@ function viewRecord(id) {
 
 function saveRecord() {
     var formData = $('#record_form').serializeObject();
+    
+   console.log(formData)
+    if(formData.name =='' || formData.description=='' )
+    {
+        window.alert("Completati toate campurile!")
+    }
+    else 
+    {
     if(formData.id) {
         updateRecord(formData);
     } else {
         createRecord(formData);
+    }
     }
 }
 

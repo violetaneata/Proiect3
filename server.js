@@ -3,9 +3,9 @@ var Sequelize = require("sequelize")
 
 //connect to mysql database
 //baza de date, username, password
-var sequelize = new Sequelize('catalog', 'root', 'pass', {
+var sequelize = new Sequelize('catalog', 'violetaneata', 'stud123', {
     dialect:'mysql',
-    host:'db'
+    host:'127.0.0.1'
 })
 
 sequelize.authenticate().then(function(){
@@ -37,6 +37,7 @@ var Reviews = sequelize.define('reviews', {
 
 Products.belongsTo(Categories, {foreignKey: 'category_id', targetKey: 'id'})
 Products.hasMany(Reviews, {foreignKey: 'product_id'});
+Reviews.belongsTo(Products, {foreignKey: 'product_id', targetKey: 'id'})
 
 var app = express()
 
@@ -205,23 +206,68 @@ app.get('/categories/:id/products', function(request, response) {
 })
 
 app.get('/reviews', function(request, response) {
+    Reviews.findAll(
+        {
+            include: [{
+                model: Products,
+                where: { id: Sequelize.col('reviews.product_id') }
+            }]
+        }
+        
+        ).then(
+            function(reviews) {
+                response.status(200).send(reviews)
+            }
+        )})
 
-})
 
 app.get('/reviews/:id', function(request, response) {
+    Reviews.findByPk(request.params.id, {
+            include: [{
+                model: Products,
+                where: { id: Sequelize.col('reviews.product_id') }
+            }]
+        }).then(
+            function(review) {
+                response.status(200).send(review)
+            }
+        )
     
 })
 
 app.post('/reviews', function(request, response) {
+    Reviews.create(request.body).then(function(review) {
+        response.status(201).send(review)
+    })
 
 })
 
 app.put('/reviews/:id', function(request, response) {
-    
+    Reviews.findByPk(request.params.id).then(function(review) {
+        if(review) {
+            review.update(request.body).then(function(review){
+                response.status(201).send(review)
+            }).catch(function(error) {
+                response.status(200).send(error)
+            })
+        } else {
+            response.status(404).send('Not found')
+        }
+    })
 })
 
 app.delete('/reviews/:id', function(request, response) {
+    Reviews.findByPk(request.params.id).then(function(review) {
+        if(review) {
+            review.destroy().then(function(){
+                response.status(204).send()
+            })
+        } else {
+            response.status(404).send('Not found')
+        }
+    })
     
 })
+
 
 app.listen(8080)
